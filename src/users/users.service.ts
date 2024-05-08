@@ -8,17 +8,28 @@ import { LogInDto } from './dto/log-in.dto';
 import { error } from 'console';
 import * as bcrypt from 'bcrypt';
 import { LogInWithIdDto } from './dto/logInWithId.dto';
+import { UserType } from './users.enum';
 
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(Users.name) private model: Model<Users>) {}
 
   async createUser(createUserDto: CreateUserDto) {
+    const res = await this.model.find({ email: createUserDto.email });
+    if (!UserType.hasOwnProperty(createUserDto.type)) {
+      return new UnauthorizedException('TYPE is Wrong');
+    }
+    if (res == null) {
+      return new UnauthorizedException('This Email is Already Registered');
+    }
+
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     return this.model.create({
       email: createUserDto.email,
-      name: createUserDto.name,
+      firstName: createUserDto.firstName,
+      lastName: createUserDto.lastName,
       password: hashedPassword,
+      type: createUserDto.type,
     });
   }
 
@@ -58,7 +69,8 @@ export class UsersService {
   async updateUser(updateUSer: UpdateUserDto) {
     const res = await this.model.findOne({ email: updateUSer.email });
     if (!res) return new UnauthorizedException('Invalid Email You have Given');
-    res.firstName = updateUSer.name;
+    res.firstName = updateUSer.firstName;
+    res.lastName = updateUSer.lastName;
     await res.save();
     return res;
   }
@@ -76,11 +88,9 @@ export class UsersService {
   }
 
   async remove(email: string) {
-    console.log('email', email);
     const res = await this.model.findOne({
       email: email,
     });
-    console.log('res', res);
 
     if (!res) {
       throw new UnauthorizedException('You Have Entered Invalid Email');
