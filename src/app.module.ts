@@ -2,14 +2,17 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { ProfilesModule } from './profiles/profiles.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ProfilesModule } from './profiles/profiles.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017', {
-      dbName: 'BSS',
-    }),
+    MongooseModule.forRoot(
+      'mongodb+srv://nik2002:1234554321@college.sccn3uq.mongodb.net/',
+      {
+        dbName: 'BSS',
+      },
+    ),
     UsersModule,
     ProfilesModule,
   ],

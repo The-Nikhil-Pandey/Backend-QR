@@ -7,20 +7,48 @@ import {
   Param,
   Delete,
   Put,
+  Query,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LogInDto } from './dto/log-in.dto';
 import { LogInWithIdDto } from './dto/logInWithId.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { FacultyService, ProfilesService } from 'src/profiles/profiles.service';
+import {
+  CreateFacultyDto,
+  CreateStudentDto,
+} from 'src/profiles/dto/create-profile.dto';
+import { UserType } from './users.enum';
 
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly studentService: ProfilesService,
+    private readonly facultyService: FacultyService,
+  ) {}
 
   @Post('/sign-up')
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.createUser(createUserDto);
+  async create(
+    @Body() createStudentDto: CreateStudentDto,
+    createFacultyDto: CreateFacultyDto,
+  ) {
+    const typeStudent = createStudentDto.type;
+    if (!UserType.hasOwnProperty(createStudentDto.type)) {
+      return new UnauthorizedException('TYPE is Wrong');
+    }
+    if (typeStudent == 'student') {
+      return this.studentService.createStudent(createStudentDto);
+    }
+    if (typeStudent == 'faculty') {
+      return this.facultyService.createFaculty(createFacultyDto);
+    }
+
+    // return this.usersService.createUser(createUserDto);
   }
 
   @Post('/sign-in')
@@ -39,8 +67,8 @@ export class UsersController {
   }
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  findAll(@Query('type') type: string) {
+    return this.usersService.findAll(type);
   }
 
   @Get(':id')

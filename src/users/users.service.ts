@@ -15,11 +15,11 @@ export class UsersService {
   constructor(@InjectModel(Users.name) private model: Model<Users>) {}
 
   async createUser(createUserDto: CreateUserDto) {
-    const res = await this.model.find({ email: createUserDto.email });
+    const res = await this.model.findOne({ email: createUserDto.email });
     if (!UserType.hasOwnProperty(createUserDto.type)) {
       return new UnauthorizedException('TYPE is Wrong');
     }
-    if (res == null) {
+    if (res) {
       return new UnauthorizedException('This Email is Already Registered');
     }
 
@@ -75,8 +75,8 @@ export class UsersService {
     return res;
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll(type: string) {
+    return await this.model.find({ type: type });
   }
 
   findOne(id: number) {

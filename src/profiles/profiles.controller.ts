@@ -1,34 +1,84 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ProfilesService } from './profiles.service';
-import { CreateProfileDto } from './dto/create-profile.dto';
-import { UpdateProfileDto } from './dto/update-profile.dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
+import { FacultyService, ProfilesService } from './profiles.service';
+import { CreateFacultyDto, CreateStudentDto } from './dto/create-profile.dto';
+import { UpdateFacultyDto, UpdateStudentDto } from './dto/update-profile.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { LogInDto } from './dto/login.dto';
 
-@Controller('profiles')
+@ApiTags('Students')
+@Controller('students')
 export class ProfilesController {
   constructor(private readonly profilesService: ProfilesService) {}
 
-  @Post()
-  create(@Body() createProfileDto: CreateProfileDto) {
-    return this.profilesService.create(createProfileDto);
+  // @Post('/students/sign-up')
+  // createStudent(@Body() createStudentDto: CreateStudentDto) {
+  //   return this.profilesService.createStudent(createStudentDto);
+  // }
+
+  // @Post('/students/log-in')
+  // logIn(@Body() logInDto: LogInDto) {
+  //   return this.profilesService.logIn(logInDto);
+  // }
+
+  @Put(':_id')
+  updateStudent(
+    @Param('_id') _id: string,
+    @Body() updateStudent: UpdateStudentDto,
+  ) {
+    return this.profilesService.updateStudent(_id, updateStudent);
   }
 
-  @Get()
+  @Get('')
   findAll() {
     return this.profilesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.profilesService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProfileDto: UpdateProfileDto) {
-    return this.profilesService.update(+id, updateProfileDto);
-  }
-
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.profilesService.remove(+id);
+  remove(@Param('_id') _id: string) {
+    return this.profilesService.remove(_id);
+  }
+  @Get(':_id')
+  findOne(@Param('id') _id: string) {
+    return this.profilesService.findOne(_id);
+  }
+}
+
+// Faculty
+
+@ApiTags('Faculty')
+@Controller('faculty')
+export class FacultyController {
+  constructor(private readonly facultyService: FacultyService) {}
+
+  // @Post('/sign-up')
+  // createFaculty(@Body() createFacultyDto: CreateFacultyDto) {
+  //   return this.facultyService.createFaculty(createFacultyDto);
+  // }
+
+  // @Post('/log-in')
+  // logInFaculty(@Body() logInfacultyDto: LogInDto) {
+  //   return this.facultyService.loginFaculty(logInfacultyDto);
+  // }
+
+  @Put(':_id')
+  updateFaculty(
+    @Param('_id') email: string,
+    @Body() updateFacultyDto: UpdateFacultyDto,
+  ) {
+    return this.facultyService.updateFaculty(email, updateFacultyDto);
+  }
+
+  @Delete(':_id')
+  deleteFaculty(@Param('_id') _id: string) {
+    return this.facultyService.deleteFaculty(_id);
   }
 }
