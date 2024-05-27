@@ -5,6 +5,7 @@ import { Students } from './schemas/students.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { LogInDto } from './dto/login.dto';
+import * as bcrypt from 'bcrypt';
 import { Faculty } from './schemas/faculty.schema';
 
 @Injectable()
@@ -19,7 +20,7 @@ export class ProfilesService {
       return new UnauthorizedException('Usery Already Registered');
     }
 
-    const hashedPassword = createStudentDto.password;
+    const hashedPassword = await bcrypt.hash(createStudentDto.password, 10);
 
     return this.model.create({ ...createStudentDto, password: hashedPassword });
   }
