@@ -5,7 +5,7 @@ import { Students } from './schemas/students.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { LogInDto } from './dto/login.dto';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import { Faculty } from './schemas/faculty.schema';
 
 @Injectable()
