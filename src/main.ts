@@ -32,9 +32,7 @@ async function bootstrap() {
     ],
   });
 
-  await app.listen(process.env.PORT);
-  console.log(
-    `Server is running by main.ts on port : http://localhost:${process.env.PORT}`,
-  );
+  await app.listen(8085);
+  console.log(`Server is running by main.ts on port : http://localhost:8085`);
 }
 bootstrap();
