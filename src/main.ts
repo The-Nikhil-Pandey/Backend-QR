@@ -12,8 +12,8 @@ async function bootstrap() {
   });
 
   const config = new DocumentBuilder()
-    .setTitle('API Docs: SSLLP')
-    .setDescription('Seek Solution LLP')
+    .setTitle('API Docs: QR-Id-Card')
+    .setDescription('BSSGI')
     .addBearerAuth(
       { type: 'http', name: 'token', in: 'header' },
       'authentication',
