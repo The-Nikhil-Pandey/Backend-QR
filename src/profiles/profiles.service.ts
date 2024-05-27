@@ -83,8 +83,8 @@ export class FacultyService {
   constructor(@InjectModel(Faculty.name) private model: Model<Faculty>) {}
 
   async createFaculty(createFacultyDto: CreateFacultyDto) {
-    const res = await this.model.findOne({ email: createFacultyDto.email });
-    if (res) return new UnauthorizedException('Email is Already Registered');
+    // const res = await this.model.findOne({ email: createFacultyDto.email });
+    // if (res) return new UnauthorizedException('Email is Already Registered');
 
     return this.model.create(createFacultyDto);
   }

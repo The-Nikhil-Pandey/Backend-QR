@@ -50,4 +50,7 @@ export class CreateFacultyDto {
 
   @ApiProperty()
   subject: string[];
+
+  @ApiProperty()
+  type: string;
 }

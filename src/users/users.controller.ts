@@ -17,10 +17,6 @@ import { LogInDto } from './dto/log-in.dto';
 import { LogInWithIdDto } from './dto/logInWithId.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { FacultyService, ProfilesService } from 'src/profiles/profiles.service';
-import {
-  CreateFacultyDto,
-  CreateStudentDto,
-} from 'src/profiles/dto/create-profile.dto';
 import { UserType } from './users.enum';
 
 @ApiTags('Users')
@@ -33,19 +29,50 @@ export class UsersController {
   ) {}
 
   @Post('/sign-up')
-  async create(
-    @Body() createStudentDto: CreateStudentDto,
-    createFacultyDto: CreateFacultyDto,
-  ) {
-    const typeStudent = createStudentDto.type;
-    if (!UserType.hasOwnProperty(createStudentDto.type)) {
+  async create(@Body() createUserDto: CreateUserDto) {
+    const typeStudent = createUserDto.type;
+    if (!UserType.hasOwnProperty(createUserDto.type)) {
       return new UnauthorizedException('TYPE is Wrong');
     }
     if (typeStudent == 'student') {
-      return this.studentService.createStudent(createStudentDto);
+      return this.studentService.createStudent({
+        firstName: createUserDto.firstName,
+
+        lastName: createUserDto.lastName,
+
+        email: createUserDto.email,
+
+        password: createUserDto.password,
+
+        course: createUserDto.course,
+
+        branch: createUserDto.branch,
+
+        rollNo: createUserDto.rollNo,
+
+        regNo: createUserDto.regNo,
+
+        contact: createUserDto.contact,
+
+        dob: createUserDto.dob,
+
+        type: createUserDto.type,
+      });
     }
     if (typeStudent == 'faculty') {
-      return this.facultyService.createFaculty(createFacultyDto);
+      return this.facultyService.createFaculty({
+        firstName: createUserDto.firstName,
+
+        lastName: createUserDto.lastName,
+
+        email: createUserDto.email,
+
+        password: createUserDto.password,
+
+        subject: createUserDto.subject,
+
+        type: createUserDto.type,
+      });
     }
 
     // return this.usersService.createUser(createUserDto);

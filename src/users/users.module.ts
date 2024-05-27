@@ -3,7 +3,7 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Users, UsersSchema } from './schemas/users.schema';
-import { ProfilesService } from 'src/profiles/profiles.service';
+import { FacultyService, ProfilesService } from 'src/profiles/profiles.service';
 import { Students, StudentsSchema } from 'src/profiles/schemas/students.schema';
 import { Faculty, FacultySchema } from 'src/profiles/schemas/faculty.schema';
 
@@ -16,6 +16,6 @@ import { Faculty, FacultySchema } from 'src/profiles/schemas/faculty.schema';
     ]),
   ],
   controllers: [UsersController],
-  providers: [UsersService, ProfilesService],
+  providers: [UsersService, ProfilesService, FacultyService],
 })
 export class UsersModule {}

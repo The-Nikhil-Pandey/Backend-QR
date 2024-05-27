@@ -5,7 +5,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Users } from './schemas/users.schema';
 import { Model } from 'mongoose';
 import { LogInDto } from './dto/log-in.dto';
-import { error } from 'console';
 import * as bcrypt from 'bcrypt';
 import { LogInWithIdDto } from './dto/logInWithId.dto';
 import { UserType } from './users.enum';
@@ -83,9 +82,9 @@ export class UsersService {
     return `This action returns a #${id} user`;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+  // update(id: number, updateUserDto: UpdateUserDto) {
+  //   return `This action updates a #${id} user`;
+  // }
 
   async remove(email: string) {
     const res = await this.model.findOne({

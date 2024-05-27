@@ -14,5 +14,6 @@ import { Faculty, FacultySchema } from './schemas/faculty.schema';
   ],
   controllers: [ProfilesController, FacultyController],
   providers: [ProfilesService, FacultyService],
+  exports: [ProfilesService],
 })
 export class ProfilesModule {}

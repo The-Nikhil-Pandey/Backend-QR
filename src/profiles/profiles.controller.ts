@@ -1,18 +1,7 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Put,
-} from '@nestjs/common';
+import { Controller, Get, Body, Param, Delete, Put } from '@nestjs/common';
 import { FacultyService, ProfilesService } from './profiles.service';
-import { CreateFacultyDto, CreateStudentDto } from './dto/create-profile.dto';
 import { UpdateFacultyDto, UpdateStudentDto } from './dto/update-profile.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { LogInDto } from './dto/login.dto';
 
 @ApiTags('Students')
 @Controller('students')
