@@ -8,8 +8,8 @@ import { ProfilesModule } from './profiles/profiles.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      // 'mongodb+srv://nik2002:1234554321@college.sccn3uq.mongodb.net/',
-      'mongodb://localhost:27017',
+      'mongodb+srv://nik2002:1234554321@college.sccn3uq.mongodb.net/',
+      // 'mongodb://localhost:27017',
       {
         dbName: 'BSS',
       },
