@@ -23,13 +23,13 @@ export class Students {
   branch: string;
 
   @Prop({ required: true })
-  rollNo: number;
+  rollNo: string;
 
   @Prop({ required: true })
-  regNo: number;
+  regNo: string;
 
   @Prop({ required: true })
-  contact: number;
+  contact: string;
 
   @Prop({ required: true })
   dob: string;

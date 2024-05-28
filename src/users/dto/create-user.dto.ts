@@ -1,7 +1,7 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { CreateStudentDto } from 'src/profiles/dto/create-profile.dto';
 
-export class CreateUserDto extends PartialType(CreateStudentDto) {
+export class CreateUserDto {
   @ApiProperty()
   firstName: string;
 
@@ -21,13 +21,13 @@ export class CreateUserDto extends PartialType(CreateStudentDto) {
   branch: string;
 
   @ApiProperty()
-  rollNo: number;
+  rollNo: string;
 
   @ApiProperty()
-  regNo: number;
+  regNo: string;
 
   @ApiProperty()
-  contact: number;
+  contact: string;
 
   @ApiProperty()
   dob: string;

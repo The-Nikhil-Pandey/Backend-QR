@@ -20,13 +20,13 @@ export class CreateStudentDto {
   branch: string;
 
   @ApiProperty()
-  rollNo: number;
+  rollNo: string;
 
   @ApiProperty()
-  regNo: number;
+  regNo: string;
 
   @ApiProperty()
-  contact: number;
+  contact: string;
 
   @ApiProperty()
   dob: string;
