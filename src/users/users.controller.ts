@@ -17,6 +17,7 @@ import { LogInWithIdDto } from './dto/logInWithId.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { FacultyService, ProfilesService } from 'src/profiles/profiles.service';
 import { UserType } from './users.enum';
+import * as bcrypt from 'bcrypt';
 
 @ApiTags('Users')
 @Controller('users')
@@ -29,6 +30,7 @@ export class UsersController {
 
   @Post('/sign-up')
   async create(@Body() createUserDto: CreateUserDto) {
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     const typeStudent = createUserDto.type;
     if (!UserType.hasOwnProperty(createUserDto.type)) {
       return new UnauthorizedException('TYPE is Wrong');
@@ -41,7 +43,7 @@ export class UsersController {
 
         email: createUserDto.email,
 
-        password: createUserDto.password,
+        password: hashedPassword,
 
         course: createUserDto.course,
 

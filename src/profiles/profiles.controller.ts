@@ -1,7 +1,16 @@
-import { Controller, Get, Body, Param, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Body,
+  Param,
+  Delete,
+  Put,
+  Post,
+} from '@nestjs/common';
 import { FacultyService, ProfilesService } from './profiles.service';
 import { UpdateFacultyDto, UpdateStudentDto } from './dto/update-profile.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { LogInDto } from './dto/login.dto';
 
 @ApiTags('Students')
 @Controller('students')
@@ -13,10 +22,10 @@ export class ProfilesController {
   //   return this.profilesService.createStudent(createStudentDto);
   // }
 
-  // @Post('/students/log-in')
-  // logIn(@Body() logInDto: LogInDto) {
-  //   return this.profilesService.logIn(logInDto);
-  // }
+  @Post('/log-in')
+  logIn(@Body() logInDto: LogInDto) {
+    return this.profilesService.logIn(logInDto);
+  }
 
   @Put(':_id')
   updateStudent(

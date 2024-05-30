@@ -6,6 +6,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { LogInDto } from './dto/login.dto';
 import { Faculty } from './schemas/faculty.schema';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class ProfilesService {
@@ -24,20 +25,21 @@ export class ProfilesService {
     return this.model.create({ ...createStudentDto, password: hashedPassword });
   }
 
-  // async logIn(logInDto: LogInDto) {
-  //   const res = await this.model.findOne({ email: logInDto.email });
+  async logIn(logInDto: LogInDto) {
+    const res = await this.model.findOne({ _id: logInDto._id });
+    if (res) {
+      const passwordMatch = await bcrypt.compare(
+        logInDto.password,
+        res.password,
+      );
+      if (passwordMatch) {
+        return res;
+      }
+      throw new Error('Invalid Password');
+    }
 
-  //   if (res) {
-  //     const passwordMatch = await bcrypt.compare(
-  //       logInDto.password,
-  //       res.password,
-  //     );
-  //     if (passwordMatch) return res;
-  //     throw new Error('Invalid Password');
-  //   }
-
-  //   return Error('User Not Found');
-  // }
+    return Error('User Not Found');
+  }
 
   async updateStudent(_id: string, updateStudent: UpdateStudentDto) {
     const res = this.model.findOne({ _id: _id });
@@ -89,7 +91,7 @@ export class FacultyService {
   }
 
   async loginFaculty(loginFacultyDto: LogInDto) {
-    return this.model.findOne({ email: loginFacultyDto.email });
+    return this.model.findOne({ _id: loginFacultyDto._id });
   }
 
   async updateFaculty(_id: string, updateFacultyDto: UpdateFacultyDto) {
