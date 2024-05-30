@@ -33,5 +33,8 @@ export class Students {
 
   @Prop({ required: true })
   dob: string;
+
+  @Prop()
+  img: string;
 }
 export const StudentsSchema = SchemaFactory.createForClass(Students);

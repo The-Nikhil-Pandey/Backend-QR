@@ -37,4 +37,7 @@ export class CreateUserDto {
 
   @ApiProperty()
   type: string;
+
+  @ApiProperty()
+  img: string;
 }

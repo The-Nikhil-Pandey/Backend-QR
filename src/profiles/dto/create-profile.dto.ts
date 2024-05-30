@@ -33,6 +33,9 @@ export class CreateStudentDto {
 
   @ApiProperty()
   type: string;
+
+  @ApiProperty()
+  img: string;
 }
 
 export class CreateFacultyDto {

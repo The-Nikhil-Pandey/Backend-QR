@@ -20,9 +20,7 @@ export class ProfilesService {
       return new UnauthorizedException('Usery Already Registered');
     }
 
-    const hashedPassword = createStudentDto.password;
-
-    return this.model.create({ ...createStudentDto, password: hashedPassword });
+    return this.model.create(createStudentDto);
   }
 
   async logIn(logInDto: LogInDto) {

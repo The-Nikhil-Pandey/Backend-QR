@@ -58,6 +58,8 @@ export class UsersController {
         dob: createUserDto.dob,
 
         type: createUserDto.type,
+
+        img: createUserDto.img,
       });
     }
     if (typeStudent == 'faculty') {
