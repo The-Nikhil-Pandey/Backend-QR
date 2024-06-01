@@ -4,20 +4,29 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProfilesModule } from './profiles/profiles.module';
+import { ConfigModule } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthGuard } from './auth/auth.guard';
 
 @Module({
   imports: [
+
+    ConfigModule.forRoot({ isGlobal: true }),
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_CONSTANTS_SECRET,
+      // signOptions: { expiresIn: '60s' },
+    }),
     MongooseModule.forRoot(
-      'mongodb+srv://nik2002:1234554321@college.sccn3uq.mongodb.net/',
-      // 'mongodb://localhost:27017',
+      process.env.MONGO_DB_URI,
       {
-        dbName: 'BSS',
+        dbName: process.env.MONGO_DB_DATABASE_NAME,
       },
     ),
     UsersModule,
     ProfilesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AuthGuard],
 })
-export class AppModule {}
+export class AppModule { }
