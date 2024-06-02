@@ -78,12 +78,12 @@ export class UsersController {
       });
     }
 
-    // return this.usersService.createUser(createUserDto);
+    return this.usersService.createUser(createUserDto);
   }
 
   @Post('/sign-in')
   getUser(@Body() logInDto: LogInDto) {
-    return this.usersService.getUser(logInDto);
+    return this.usersService.signIn(logInDto);
   }
 
   @Post('/signin-id')
