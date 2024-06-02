@@ -15,7 +15,12 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { LogInDto } from './dto/log-in.dto';
 import { LogInWithIdDto } from './dto/logInWithId.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { FacultyService, ProfilesService } from 'src/profiles/profiles.service';
+import {
+  AccountantService,
+  FacultyService,
+  LibrarianService,
+  ProfilesService,
+} from 'src/profiles/profiles.service';
 import { UserType } from './users.enum';
 import * as bcrypt from 'bcrypt';
 
@@ -26,6 +31,8 @@ export class UsersController {
     private readonly usersService: UsersService,
     private readonly studentService: ProfilesService,
     private readonly facultyService: FacultyService,
+    private readonly accountantService: AccountantService,
+    private readonly librarianService: LibrarianService,
   ) {}
 
   @Post('/sign-up')
@@ -39,19 +46,13 @@ export class UsersController {
       return this.studentService.createStudent(createUserDto);
     }
     if (typeStudent == 'faculty') {
-      return this.facultyService.createFaculty({
-        firstName: createUserDto.firstName,
-
-        lastName: createUserDto.lastName,
-
-        email: createUserDto.email,
-
-        password: createUserDto.password,
-
-        subject: createUserDto.subject,
-
-        type: createUserDto.type,
-      });
+      return this.facultyService.createFaculty(createUserDto);
+    }
+    if (typeStudent == 'accountant') {
+      return this.accountantService.create(createUserDto);
+    }
+    if (typeStudent == 'librarian') {
+      return this.librarianService.create(createUserDto);
     }
 
     // return this.usersService.createUser(createUserDto);

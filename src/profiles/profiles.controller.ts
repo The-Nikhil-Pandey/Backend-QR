@@ -7,7 +7,12 @@ import {
   Put,
   Post,
 } from '@nestjs/common';
-import { FacultyService, ProfilesService } from './profiles.service';
+import {
+  AccountantService,
+  FacultyService,
+  LibrarianService,
+  ProfilesService,
+} from './profiles.service';
 import { UpdateFacultyDto, UpdateStudentDto } from './dto/update-profile.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { LogInDto } from './dto/login.dto';
@@ -83,5 +88,25 @@ export class FacultyController {
   @Delete(':_id')
   deleteFaculty(@Param('_id') _id: string) {
     return this.facultyService.deleteFaculty(_id);
+  }
+}
+
+@ApiTags('Accountant')
+@Controller('accountant')
+export class AccountController {
+  constructor(private readonly AccountantService: AccountantService) {}
+  @Get('all')
+  allAccountant() {
+    return this.AccountantService.getall();
+  }
+}
+
+@ApiTags('Librarian')
+@Controller('librarian')
+export class LibrarianController {
+  constructor(private readonly LibrarianService: LibrarianService) {}
+  @Get('all')
+  allAccountant() {
+    return this.LibrarianService.getall();
   }
 }

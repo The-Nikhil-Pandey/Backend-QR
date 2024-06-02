@@ -1,5 +1,10 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { CreateFacultyDto, CreateStudentDto } from './dto/create-profile.dto';
+import {
+  CreateAccountantDto,
+  CreateFacultyDto,
+  CreateLibrarianDto,
+  CreateStudentDto,
+} from './dto/create-profile.dto';
 import { UpdateFacultyDto, UpdateStudentDto } from './dto/update-profile.dto';
 import { Students } from './schemas/students.schema';
 import { Model } from 'mongoose';
@@ -7,6 +12,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { LogInDto } from './dto/login.dto';
 import { Faculty } from './schemas/faculty.schema';
 import * as bcrypt from 'bcrypt';
+import { Accountant } from './schemas/accountant.schema';
+import { Librarian } from './schemas/librarian.schema';
 
 @Injectable()
 export class ProfilesService {
@@ -117,5 +124,25 @@ export class FacultyService {
     await this.model.findOneAndDelete({ _id: _id });
 
     return `${res} has been deleted`;
+  }
+}
+
+export class AccountantService {
+  constructor(@InjectModel(Accountant.name) private model: Model<Accountant>) {}
+  async create(createAccountantDto: CreateAccountantDto) {
+    return this.model.create(createAccountantDto);
+  }
+  async getall() {
+    return this.model.find();
+  }
+}
+
+export class LibrarianService {
+  constructor(@InjectModel(Librarian.name) private model: Model<Librarian>) {}
+  async create(createLibrarianDto: CreateLibrarianDto) {
+    return this.model.create(createLibrarianDto);
+  }
+  async getall() {
+    return this.model.find();
   }
 }
