@@ -7,6 +7,7 @@ import { ProfilesModule } from './profiles/profiles.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthGuard } from './auth/auth.guard';
+import { FeesModule } from './fees/fees.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { AuthGuard } from './auth/auth.guard';
     ),
     UsersModule,
     ProfilesModule,
+    FeesModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthGuard],

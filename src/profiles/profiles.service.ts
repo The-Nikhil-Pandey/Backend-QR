@@ -7,10 +7,16 @@ import { InjectModel } from '@nestjs/mongoose';
 import { LogInDto } from './dto/login.dto';
 import { Faculty } from './schemas/faculty.schema';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class ProfilesService {
-  constructor(@InjectModel(Students.name) private model: Model<Students>) {}
+  constructor(
+    private jwtService: JwtService,
+    @InjectModel(Students.name) private model: Model<Students>
+  ) {
+
+  }
 
   async createStudent(createStudentDto: CreateStudentDto) {
     const res = await this.model.findOne({ email: createStudentDto.email });
@@ -24,14 +30,23 @@ export class ProfilesService {
   }
 
   async logIn(logInDto: LogInDto) {
-    const res = await this.model.findOne({ _id: logInDto._id });
+    const res = await this.model.findOne({ _id: logInDto._id }, {}, { lean: true });
     if (res) {
       const passwordMatch = await bcrypt.compare(
         logInDto.password,
         res.password,
       );
       if (passwordMatch) {
-        return res;
+        const jwtRes = await this.jwtService.signAsync({
+          walletAddress: res.email,
+          sub: res._id
+        })
+
+
+        return {
+          accessToken: jwtRes,
+          ...res
+        };
       }
       throw new Error('Invalid Password');
     }
@@ -79,7 +94,7 @@ export class ProfilesService {
 }
 
 export class FacultyService {
-  constructor(@InjectModel(Faculty.name) private model: Model<Faculty>) {}
+  constructor(@InjectModel(Faculty.name) private model: Model<Faculty>) { }
 
   async createFaculty(createFacultyDto: CreateFacultyDto) {
     // const res = await this.model.findOne({ email: createFacultyDto.email });
