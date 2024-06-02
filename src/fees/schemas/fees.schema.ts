@@ -4,7 +4,7 @@ import { Faculty } from 'src/profiles/schemas/faculty.schema';
 import { Students } from 'src/profiles/schemas/students.schema';
 
 export type UsersDocument = HydratedDocument<Fees>;
-@Schema()
+@Schema({ timestamps: true })
 export class Fees {
   @Prop({ required: true, type: Number })
   amount: number;
