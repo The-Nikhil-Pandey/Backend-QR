@@ -67,6 +67,11 @@ export class FacultyController {
   //   return this.facultyService.loginFaculty(logInfacultyDto);
   // }
 
+  @Get('/all')
+  allFaculty() {
+    return this.facultyService.allFaculty();
+  }
+
   @Put(':_id')
   updateFaculty(
     @Param('_id') email: string,

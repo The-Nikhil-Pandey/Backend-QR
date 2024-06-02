@@ -4,37 +4,40 @@ import { HydratedDocument } from 'mongoose';
 export type StudentsDocument = HydratedDocument<Students>;
 @Schema()
 export class Students {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   firstName: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   lastName: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   email: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   password: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   course: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   branch: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   rollNo: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   regNo: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   contact: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   dob: string;
 
-  @Prop()
+  @Prop({ type: String })
   img: string;
+
+  @Prop({ type: Object, required: true })
+  personalInfo: Object;
 }
 export const StudentsSchema = SchemaFactory.createForClass(Students);

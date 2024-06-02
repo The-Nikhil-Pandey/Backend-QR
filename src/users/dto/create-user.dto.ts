@@ -40,4 +40,7 @@ export class CreateUserDto {
 
   @ApiProperty()
   img: string;
+
+  @ApiProperty({ type: Object })
+  personalInfo: {};
 }

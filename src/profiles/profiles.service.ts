@@ -92,6 +92,10 @@ export class FacultyService {
     return this.model.findOne({ _id: loginFacultyDto._id });
   }
 
+  async allFaculty() {
+    return this.model.find();
+  }
+
   async updateFaculty(_id: string, updateFacultyDto: UpdateFacultyDto) {
     const res = this.model.findOne({ _id: _id });
     if (!res) return new UnauthorizedException('User Not Found');

@@ -36,31 +36,7 @@ export class UsersController {
       return new UnauthorizedException('TYPE is Wrong');
     }
     if (typeStudent == 'student') {
-      return this.studentService.createStudent({
-        firstName: createUserDto.firstName,
-
-        lastName: createUserDto.lastName,
-
-        email: createUserDto.email,
-
-        password: hashedPassword,
-
-        course: createUserDto.course,
-
-        branch: createUserDto.branch,
-
-        rollNo: createUserDto.rollNo,
-
-        regNo: createUserDto.regNo,
-
-        contact: createUserDto.contact,
-
-        dob: createUserDto.dob,
-
-        type: createUserDto.type,
-
-        img: createUserDto.img,
-      });
+      return this.studentService.createStudent(createUserDto);
     }
     if (typeStudent == 'faculty') {
       return this.facultyService.createFaculty({
